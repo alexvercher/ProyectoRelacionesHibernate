@@ -1,9 +1,13 @@
 package es.pildoras.conexionHibernate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -11,7 +15,7 @@ import javax.persistence.Table;
 public class Cliente {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 	
@@ -24,12 +28,16 @@ public class Cliente {
 	@Column(name = "direccion")
 	private String direccion;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id")
+	private DetallesCliente detallesCliente;
+	
+	
 	public Cliente() {
 		
 	}
 	
 	public Cliente(int id, String nombre, String apellidos, String direccion) {
-		this.id = id;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.direccion = direccion;
